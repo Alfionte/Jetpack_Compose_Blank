@@ -1,0 +1,114 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
+}
+
+android {
+    namespace 'com.gabrieleporcelli.testproject'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.gabrieleporcelli.testproject"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.0'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+
+configurations.all {
+    // Exclude junit jupiter for compose compatibility
+    exclude group: 'org.junit.jupiter', module: 'junit-jupiter'
+}
+
+dependencies {
+
+// KTX
+    implementation 'androidx.core:core-ktx:1.9.0'
+
+    implementation 'androidx.activity:activity-compose:1.6.1'
+    implementation 'androidx.compose.material:material:1.3.1'
+
+    // Compose ui
+    implementation "androidx.compose.ui:ui:1.3.3"
+    implementation "androidx.compose.ui:ui-tooling-preview:1.3.3"
+
+    // Lifecycle utilities
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha05"
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.6.0-alpha05'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha05"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.0-alpha05"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.6.0-alpha05"
+
+    // Navigation compose
+    implementation "androidx.navigation:navigation-compose:2.6.0-alpha04"
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // Room
+    implementation "androidx.room:room-runtime:2.5.0"
+    implementation "androidx.room:room-ktx:2.5.0"
+    kapt "androidx.room:room-compiler:2.5.0"
+    testImplementation "androidx.room:room-testing:2.5.0"
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:2.44.2"
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+    kapt "com.google.dagger:hilt-compiler:2.44.2"
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.2.2")
+    implementation("io.coil-kt:coil-svg:2.2.2")
+
+    // Test
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    // Mockk
+    testImplementation "io.mockk:mockk-android:1.13.3"
+    testImplementation "io.mockk:mockk-agent:1.13.3"
+    androidTestImplementation "io.mockk:mockk-android:1.13.3"
+    androidTestImplementation "io.mockk:mockk-agent:1.13.3"
+    // Test Coroutines
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
+    // Test Flow - Turbine
+    testImplementation 'app.cash.turbine:turbine:0.12.1'
+    // Test Compose UI
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.3.3"
+    debugImplementation "androidx.compose.ui:ui-tooling:1.3.3"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:1.3.3"
+}
